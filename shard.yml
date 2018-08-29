@@ -8,9 +8,10 @@ targets:
   date_range:
     main: src/date_range.cr
 
-spec2:
-  github: waterlink/spec2.cr
-  version: ~> 0.9
+dependencies:
+  spec2:
+    github: waterlink/spec2.cr
+    version: ~> 0.9
 
 crystal: 0.26.0
 
