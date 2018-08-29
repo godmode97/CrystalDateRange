@@ -1,16 +1,28 @@
+require "cronus"
+
 struct App::DateRange
-  getter from, to, other
-  def initialize(@from : Time, @to : Time, *other_date)
+  alias Date = Cronus::Date
+
+  include Comparable(Date)
+
+  getter from, to
+  # property other = Tuple.new
+  def initialize(@from : Date, @to : Date, *other_date)
     # @other = Tuple.new
-    @other = other_date
-    p other_date_as_array: other_date.as_a
+    # @other = other_date
+    has_another_date(other_date)
+  end
+
+  private def has_another_date(other : Tuple) : Bool
+    other.size > 0
   end
 
   def has_another_date
-    @other.as_a.size > 0
+    true
   end
 
-  def overlaps(new_date : DateRange)
+  def ==(other_date : DateRange)
+    date = self.from <=> self.to
 
   end
 end
