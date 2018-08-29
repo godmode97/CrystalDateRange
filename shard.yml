@@ -1,0 +1,17 @@
+name: date_range
+version: 0.1.0
+
+authors:
+  - neiljames <neil.monzales@shoresuite.com>
+
+targets:
+  date_range:
+    main: src/date_range.cr
+
+spec2:
+  github: waterlink/spec2.cr
+  version: ~> 0.9
+
+crystal: 0.26.0
+
+license: MIT
