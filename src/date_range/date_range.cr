@@ -21,16 +21,11 @@ module App
       end
     end
 
-    def overlapping?(other_date : DateRange)
-      date = self.from <=> self.to
-    end
-
     def includes?(other_date : Date)
       other.includes?(other_date)
     end
 
     def overlaps_with(other : DateRange)
-
     end
   end
 end

@@ -24,19 +24,18 @@ Spec2.describe App::DateRange do
           # Given
           from = Date.new(2018, 1, 5)
           to = Date.new(2018, 1, 1)
-          # When
-          date_range = App::DateRange.new(from, to)
-          # Then
-          raise_error(Exception, eq(":from should be less than :to")) # not working
+          expect{App::DateRange.new(from, to)}.to raise_error(Exception, ":from should be less than :to")
         end
       end
     end
   end
 
   describe "#includes?" do
-    context "" do
+    context "checks if there are any other date" do
     end
-    it "checks if there is another date_range" do
+    context "checks if there aren't any other date" do
+    end
+    it "determines" do
       # Given
       from = Date.new(2018, 1, 1)
       to = Date.new(2018, 1, 5)
@@ -54,7 +53,7 @@ Spec2.describe App::DateRange do
     end
   end
 
-  describe "#overlapping?" do
+  describe "#overlaps_with" do
     it "checks if there dateranges are overlapping" do
       # Given
       from = Date.new(2018, 1, 1)
