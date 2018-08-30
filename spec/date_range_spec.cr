@@ -19,12 +19,13 @@ Spec2.describe App::DateRange do
           expect(date_range.to).to eq(to)
         end
       end
+
       context ":from (start date) is greater than :to (end date)" do
         it "will fail" do
           # Given
           from = Date.new(2018, 1, 5)
           to = Date.new(2018, 1, 1)
-          expect{App::DateRange.new(from, to)}.to raise_error(Exception, ":from should be less than :to")
+          expect { App::DateRange.new(from, to) }.to raise_error(Exception, ":from should be less than :to")
         end
       end
     end
