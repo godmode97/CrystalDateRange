@@ -6,39 +6,51 @@ Spec2.describe App::DateRange do
   alias Date = Cronus::Date
 
   describe "#initialize(from, to)" do
-    it "can be initialized with :from and :to" do
-      # Given
-      from = Date.new(2018, 1, 1)
-      to = Date.new(2018, 1, 5)
-      # When
-      date = App::DateRange.new(from, to)
-      # Then
-      expect(date.from.year).to eq(2018)
-      expect(date.from.month.to_s).to eq("January")
-      expect(date.from.day).to eq(1)
-
-      expect(date.to.year).to eq(2018)
-      expect(date.to.month.to_s).to eq("January")
-      expect(date.to.day).to eq(5)
+    context "initialized from and to" do
+      context ":from (start date) is less than :to (end date)" do
+        it "creates instance" do
+          # Given
+          from = Date.new(2018, 1, 1)
+          to = Date.new(2018, 1, 5)
+          # When
+          date_range = App::DateRange.new(from, to)
+          # Then
+          expect(date_range.from).to eq(from)
+          expect(date_range.to).to eq(to)
+        end
+      end
+      context ":from (start date) is greater than :to (end date)" do
+        it "will fail" do
+          # Given
+          from = Date.new(2018, 1, 5)
+          to = Date.new(2018, 1, 1)
+          # When
+          date_range = App::DateRange.new(from, to)
+          # Then
+          raise_error(Exception, eq(":from should be less than :to")) # not working
+        end
+      end
     end
   end
 
-  describe "#has_other_dates" do
-    it "checks if there is another date" do
+  describe "#includes?" do
+    context "" do
+    end
+    it "checks if there is another date_range" do
       # Given
       from = Date.new(2018, 1, 1)
       to = Date.new(2018, 1, 5)
       other_date = Date.new(2018, 2, 27)
       yet_another_date = Date.new(2018, 3, 7)
       # When
-      date = App::DateRange.new(from,
+      date_range = App::DateRange.new(from,
         to,
         other_date,
         yet_another_date
       )
       # Then
-      p other_dates: date.has_other_dates
-      expect(date.has_other_dates).to be_true
+      expect(date_range.includes?(other_date)).to be_true
+      expect(date_range.includes?(yet_another_date)).to be_true
     end
   end
 
