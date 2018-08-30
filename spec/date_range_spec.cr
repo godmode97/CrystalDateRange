@@ -33,7 +33,7 @@ Spec2.describe App::DateRange do
 
   describe "#includes?" do
     context "checks if there are any other date" do
-      it "determines" do
+      it "has excessive dates" do
         # Given
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
@@ -45,14 +45,22 @@ Spec2.describe App::DateRange do
           other_date,
           yet_another_date
         )
-        # # Then
-        # p range: date_range.from
+        # Then
         expect(date_range.includes?(other_date)).to be_true
         expect(date_range.includes?(yet_another_date)).to be_true
       end
     end
     context "checks if there aren't any other date" do
-
+      it "don't have any excessive date" do
+        # Given
+        from = Date.new(2018, 1, 1)
+        to = Date.new(2018, 1, 5)
+        excessive_date = Date.new(2018, 1, 5) # just
+        # When
+        date_range = App::DateRange.new(from, to)
+        # Then
+        expect(date_range.includes?(excessive_date)).to be_false
+      end
     end
 
   end
@@ -64,42 +72,51 @@ Spec2.describe App::DateRange do
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
 
-        other_from = Date.new(2018, 1, 2) # less than from and greater than
+        other_from = Date.new(2018, 1, 2) # other_from is greater_equal_to :from and less_than_equal :to # => true (overlapping)
         other_to = Date.new(2018, 1, 6)
 
         # When
         date_range = App::DateRange.new(from, to)
         other_date_range = App::DateRange.new(other_from, to, other_to)
 
-        expect(date_range.overlaps_with(other_date_range)).to be_true
+        overlapping? = date_range.overlaps_with(other_date_range)
+
+        # Then
+        expect(overlapping?).to be_true
       end
 
-      it "should detect same :from and :end date" do
+      it "should detect same :from and :from_to, and :to and :other_to date" do
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
 
-        other_from = Date.new(2018, 1, 1) # less than from and greater than
+        other_from = Date.new(2018, 1, 1) # other_from is equal_to :from and less_than_equal to :to # => true (overlapping)
         other_to = Date.new(2018, 1, 5)
 
         # When
         date_range = App::DateRange.new(from, to)
         other_date_range = App::DateRange.new(other_from, to, other_to)
 
-        expect(date_range.overlaps_with(other_date_range)).to be_true
+        overlapping? = date_range.overlaps_with(other_date_range)
+
+        # Then
+        expect(overlapping?).to be_true
       end
 
-      it "should detect same :from and :other#to date" do
-        from = Date.new(2018, 1, 5)
+      it "should detect same :to and :other_to date" do
+        from = Date.new(2018, 1, 2)
         to = Date.new(2018, 1, 5)
 
-        other_from = Date.new(2018, 1, 1) # less than from and greater than
-        other_to = Date.new(2018, 1, 5)
+        other_from = Date.new(2018, 1, 1)
+        other_to = Date.new(2018, 1, 5) # other_to is less_than_equal :to # => true (overlapping)
 
         # When
         date_range = App::DateRange.new(from, to)
         other_date_range = App::DateRange.new(other_from, to, other_to)
 
-        expect(date_range.overlaps_with(other_date_range)).to be_true
+        overlapping? = date_range.overlaps_with(other_date_range)
+
+        # Then
+        expect(overlapping?).to be_true
       end
     end
     context "has no overlapping date ranges" do
@@ -107,14 +124,34 @@ Spec2.describe App::DateRange do
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
 
-        other_from = Date.new(2017, 1, 1) # less than from and greater than to
+        other_from = Date.new(2017, 1, 1) # :other_date_range is less_than :date_range
         other_to = Date.new(2017, 12, 31)
 
         # When
         date_range = App::DateRange.new(from, to)
         other_date_range = App::DateRange.new(other_from, other_to)
 
-        expect(date_range.overlaps_with(other_date_range)).to be_false
+        overlapping? = date_range.overlaps_with(other_date_range)
+
+        # Then
+        expect(overlapping?).to be_false
+      end
+
+      it "doesn't detect overlapping date ranges" do
+        from = Date.new(2018, 1, 1)
+        to = Date.new(2018, 1, 5)
+
+        other_from = Date.new(2018, 2, 1) # :other_date_range is greater_than :date_range
+        other_to = Date.new(2018, 12, 31)
+
+        # When
+        date_range = App::DateRange.new(from, to)
+        other_date_range = App::DateRange.new(other_from, other_to)
+
+        overlapping? = date_range.overlaps_with(other_date_range)
+
+        # Then
+        expect(overlapping?).to be_false
       end
     end
   end
