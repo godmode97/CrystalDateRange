@@ -37,6 +37,7 @@ Spec2.describe App::DateRange do
         yet_another_date
       )
       # Then
+      p other_dates: date.has_other_dates
       expect(date.has_other_dates).to be_true
     end
   end
