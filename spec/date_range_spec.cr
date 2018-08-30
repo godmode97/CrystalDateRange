@@ -33,25 +33,30 @@ Spec2.describe App::DateRange do
 
   describe "#includes?" do
     context "checks if there are any other date" do
+      it "determines" do
+        # Given
+        from = Date.new(2018, 1, 1)
+        to = Date.new(2018, 1, 5)
+        other_date = Date.new(2018, 2, 27)
+        yet_another_date = Date.new(2018, 3, 7)
+        # When
+        date_range = App::DateRange.new(from,
+          to,
+          other_date,
+          yet_another_date
+        )
+        # Then
+        date_range.range.each do |date|
+          p date: date
+        end
+        expect(date_range.includes?(other_date)).to be_true
+        expect(date_range.includes?(yet_another_date)).to be_true
+      end
     end
     context "checks if there aren't any other date" do
+
     end
-    it "determines" do
-      # Given
-      from = Date.new(2018, 1, 1)
-      to = Date.new(2018, 1, 5)
-      other_date = Date.new(2018, 2, 27)
-      yet_another_date = Date.new(2018, 3, 7)
-      # When
-      date_range = App::DateRange.new(from,
-        to,
-        other_date,
-        yet_another_date
-      )
-      # Then
-      expect(date_range.includes?(other_date)).to be_true
-      expect(date_range.includes?(yet_another_date)).to be_true
-    end
+
   end
 
   describe "#overlaps_with" do

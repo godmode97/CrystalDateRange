@@ -27,5 +27,9 @@ module App
 
     def overlaps_with(other : DateRange)
     end
+
+    def range
+      DateRange.new(from, to)
+    end
   end
 end
