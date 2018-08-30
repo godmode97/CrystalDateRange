@@ -15,13 +15,14 @@ module App
       has_other_dates(other_date)
     end
 
-    private def has_other_dates(other_date : Tuple)
+    private def has_other_dates(other_date : Tuple) : Array(Date)
       other_date.each do |value|
         other << value
       end
+      other
     end
 
-    def includes?(other_date : Date)
+    def includes?(other_date : Date) : Bool
       other.includes?(other_date)
     end
 
@@ -36,10 +37,6 @@ module App
         return true
       end
       false
-    end
-
-    def range
-      DateRange.new(from, to)
     end
   end
 end

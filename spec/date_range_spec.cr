@@ -107,7 +107,7 @@ Spec2.describe App::DateRange do
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
 
-        other_from = Date.new(2017, 1, 1) # less than from and greater than
+        other_from = Date.new(2017, 1, 1) # less than from and greater than to
         other_to = Date.new(2017, 12, 31)
 
         # When
