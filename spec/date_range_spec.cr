@@ -120,7 +120,7 @@ Spec2.describe App::DateRange do
       end
     end
     context "has no overlapping date ranges" do
-      it "doesn't detect overlapping date ranges" do
+      it ":other_date_range is earlier than :date_range" do
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
 
@@ -137,7 +137,7 @@ Spec2.describe App::DateRange do
         expect(overlapping?).to be_false
       end
 
-      it "doesn't detect overlapping date ranges" do
+      it ":date_range is earlier than :other_date_range" do
         from = Date.new(2018, 1, 1)
         to = Date.new(2018, 1, 5)
 
