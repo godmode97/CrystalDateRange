@@ -1,4 +1,5 @@
-# CrystalDateRange
+# CrystalDateRange [![Build Status](https://travis-ci.org/godmode97/CrystalDateRange.svg?branch=master)](https://travis-ci.org/godmode97/CrystalDateRange)
+
 
 TODO: Write a description here
 
